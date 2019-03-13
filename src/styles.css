@@ -40,16 +40,27 @@ body {
   width: 50%;
 }
 
-.desc__title {
+.description__title {
   font-size: 1.8em;
   color: white;
   margin-bottom: 25px;
 }
 
-.desc__paragraph {
+.description__paragraph {
   font-family: "Orbitron", sans-serif;
   color: #ecfcfb;
   text-shadow: 0 0 4px #12a0a0;
   letter-spacing: 1px;
   padding-top: 10px;
+}
+
+.async-status-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.error__paragraph {
+  color: white;
 }

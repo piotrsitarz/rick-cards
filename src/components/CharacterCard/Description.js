@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 
 const Description = ({ name, species, gender }) => (
   <div className="descripion-container">
-    <h1 className="desc__title">{name}</h1>
-    <p className="desc__paragraph">Species: {species}</p>
-    <p className="desc__paragraph">Gender: {gender}</p>
+    <h1 className="description__title">{name}</h1>
+    <p className="description__paragraph">Species: {species}</p>
+    <p className="description__paragraph">Gender: {gender}</p>
   </div>
 );
 

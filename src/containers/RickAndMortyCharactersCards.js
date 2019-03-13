@@ -6,18 +6,31 @@ const API_URL = "https://rickandmortyapi.com/api/character/";
 
 class RickAndMortyCharactersCards extends React.Component {
   state = {
-    characters: []
+    characters: [],
+    loading: true,
+    error: null
   };
 
   componentDidMount() {
-    axios.get(API_URL).then(({ data: { results } }) => {
-      this.setState({ characters: results });
-    });
+    axios
+      .get(API_URL)
+      .then(({ data: { results } }) => {
+        this.setState({ characters: results, loading: false });
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
   }
 
   render() {
-    const { characters } = this.state;
-    return <CharactersCards characters={characters} />;
+    const { characters, loading, error } = this.state;
+    return (
+      <CharactersCards
+        characters={characters}
+        loading={loading}
+        error={error}
+      />
+    );
   }
 }
 
