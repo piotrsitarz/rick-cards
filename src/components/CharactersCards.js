@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import CharacterCard from "./CharacterCard/CharacterCard";
 import FetchError from "./shared/FetchError";
 import LoadingSpinner from "./shared/LoadingSpinner";
+import Avatar from "./CharacterCard/Avatar";
+import Description from "./CharacterCard/Description";
 
 const CharactersCards = ({ characters, loading, error }) => {
   if (error) {
@@ -13,13 +15,10 @@ const CharactersCards = ({ characters, loading, error }) => {
   }
 
   return characters.map(({ name, image, species, gender }) => (
-    <CharacterCard
-      name={name}
-      image={image}
-      species={species}
-      gender={gender}
-      key={name}
-    />
+    <CharacterCard key={name}>
+      <Avatar image={image} name={name} />
+      <Description name={name} species={species} gender={gender} />
+    </CharacterCard>
   ));
 };
 
