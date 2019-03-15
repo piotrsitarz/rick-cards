@@ -6,7 +6,7 @@ const CharacterCard = ({ children }) => (
 );
 
 CharacterCard.propTypes = {
-  children: PropTypes.element
+  children: PropTypes.array
 };
 
 export default CharacterCard;
