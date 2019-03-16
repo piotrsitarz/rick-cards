@@ -5,8 +5,6 @@ import CharactersCards from "../components/CharactersCards";
 import withHandleError from "../components/shared/hoc/withHandleError";
 import withLoading from "../components/shared/hoc/withLoading";
 
-const API_URL = "https://rickandmortyapi.com/api/character/";
-
 const CharactersCardsWithHandleErrorAndLoading = compose(
   withLoading,
   withHandleError
@@ -20,18 +18,34 @@ class RickAndMortyCharactersCards extends React.Component {
   };
 
   componentDidMount() {
-    axios
-      .get(API_URL)
-      .then(({ data: { results } }) => {
-        this.setState({ characters: results, loading: false });
-      })
-      .catch(error => {
-        this.setState({ error });
-      });
+    let charactersIterator = 1;
+    let characters = [];
+
+    const getCharacters = () => {
+      axios
+        .get(
+          `https://rickandmortyapi.com/api/character/?page=${charactersIterator}`
+        )
+        .then(({ data: { info: { pages } }, data: { results } }) => {
+          characters = characters.concat(results);
+          charactersIterator++;
+          if (charactersIterator > pages) {
+            this.setState({ loading: false, characters });
+            return "stop fetching data";
+          }
+          return getCharacters();
+        })
+        .catch(error => {
+          this.setState({ loading: false, error });
+        });
+    };
+
+    getCharacters();
   }
 
   render() {
     const { characters, loading, error } = this.state;
+
     return (
       <CharactersCardsWithHandleErrorAndLoading
         characters={characters}
