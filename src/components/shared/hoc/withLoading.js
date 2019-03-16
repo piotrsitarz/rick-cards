@@ -3,8 +3,13 @@ import PropTypes from "prop-types";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 export default WrappedComponent => {
-  const hocComponent = ({ loading, ...props }) => {
-    if (loading) {
+  const hocComponent = ({
+    loadingCharacters,
+    loadingLocations,
+    loadingEpisodes,
+    ...props
+  }) => {
+    if (loadingCharacters || loadingLocations || loadingEpisodes) {
       return <LoadingSpinner />;
     }
 
@@ -12,7 +17,9 @@ export default WrappedComponent => {
   };
 
   hocComponent.propTypes = {
-    loading: PropTypes.bool
+    loadingCharacters: PropTypes.bool,
+    loadingLocations: PropTypes.bool,
+    loadingEpisodes: PropTypes.bool
   };
 
   return hocComponent;

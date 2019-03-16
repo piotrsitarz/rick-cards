@@ -5,8 +5,8 @@ import CharacterCard from "./CharacterCard/CharacterCard";
 import Description from "./CharacterCard/Description";
 
 const CharactersCards = ({ characters }) =>
-  characters.map(({ name, image, species, gender }) => (
-    <CharacterCard key={name}>
+  characters.map(({ id, name, image, species, gender }) => (
+    <CharacterCard key={id}>
       <Avatar image={image} name={name} />
       <Description name={name} species={species} gender={gender} />
     </CharacterCard>

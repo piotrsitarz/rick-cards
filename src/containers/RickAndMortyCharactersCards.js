@@ -13,43 +13,94 @@ const CharactersCardsWithHandleErrorAndLoading = compose(
 class RickAndMortyCharactersCards extends React.Component {
   state = {
     characters: [],
-    loading: true,
+    locations: [],
+    episodes: [],
+    loadingCharacters: true,
+    loadingLocations: true,
+    loadingEpisodes: true,
     error: null
   };
 
   componentDidMount() {
     let charactersIterator = 1;
+    let locationsIterator = 1;
+    let episodesIterator = 1;
     let characters = [];
+    let locations = [];
+    let episodes = [];
 
-    const getCharacters = () => {
+    const fetchData = (
+      data,
+      pageIterator,
+      fetchingData,
+      loadingKey,
+      dataKey
+    ) => {
       axios
-        .get(
-          `https://rickandmortyapi.com/api/character/?page=${charactersIterator}`
-        )
+        .get(`https://rickandmortyapi.com/api/${data}/?page=${pageIterator}`)
         .then(({ data: { info: { pages } }, data: { results } }) => {
-          characters = characters.concat(results);
-          charactersIterator++;
-          if (charactersIterator > pages) {
-            this.setState({ loading: false, characters });
+          fetchingData = fetchingData.concat(results);
+          pageIterator++;
+          if (pageIterator > pages) {
+            this.setState({ [loadingKey]: false, [dataKey]: fetchingData });
             return "stop fetching data";
           }
-          return getCharacters();
+          return fetchData(
+            data,
+            pageIterator,
+            fetchingData,
+            loadingKey,
+            dataKey
+          );
         })
         .catch(error => {
-          this.setState({ loading: false, error });
+          this.setState({
+            loadingCharacters: false,
+            loadingLocations: false,
+            loadingEpisodes: false,
+            error
+          });
         });
     };
 
-    getCharacters();
+    fetchData(
+      "character",
+      charactersIterator,
+      characters,
+      "loadingCharacters",
+      "characters"
+    );
+    fetchData(
+      "location",
+      locationsIterator,
+      locations,
+      "loadingLocations",
+      "locations"
+    );
+    fetchData(
+      "episode",
+      episodesIterator,
+      episodes,
+      "loadingEpisodes",
+      "episodes"
+    );
   }
 
   render() {
-    const { characters, loading, error } = this.state;
+    const {
+      characters,
+      loadingCharacters,
+      loadingLocations,
+      loadingEpisodes,
+      error
+    } = this.state;
 
     return (
       <CharactersCardsWithHandleErrorAndLoading
         characters={characters}
-        loading={loading}
+        loadingCharacters={loadingCharacters}
+        loadingLocations={loadingLocations}
+        loadingEpisodes={loadingEpisodes}
         error={error}
       />
     );
