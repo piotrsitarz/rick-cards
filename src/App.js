@@ -1,12 +1,18 @@
 import React from "react";
-import RickAndMortyCharactersCards from "./containers/RickAndMortyCharactersCards";
+import { Provider } from "react-redux";
+import AppRouter from "./routers/AppRouter";
+import configureStore from "./store/configureStore";
 import "./styles.css";
+
+const store = configureStore();
 
 function App() {
   return (
-    <div className="container">
-      <RickAndMortyCharactersCards />
-    </div>
+    <Provider store={store}>
+      <div className="container">
+        <AppRouter />
+      </div>
+    </Provider>
   );
 }
 

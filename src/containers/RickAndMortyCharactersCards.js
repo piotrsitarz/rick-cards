@@ -1,6 +1,8 @@
 import React from "react";
-import axios from "axios";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import { compose } from "recompose";
+import { fetchData } from "../helpers/fetchData";
 import CharactersCards from "../components/CharactersCards";
 import withHandleError from "../components/shared/hoc/withHandleError";
 import withLoading from "../components/shared/hoc/withLoading";
@@ -11,93 +13,26 @@ const CharactersCardsWithHandleErrorAndLoading = compose(
 )(CharactersCards);
 
 class RickAndMortyCharactersCards extends React.Component {
-  state = {
-    characters: [],
-    locations: [],
-    episodes: [],
-    loadingCharacters: true,
-    loadingLocations: true,
-    loadingEpisodes: true,
-    error: null
-  };
-
   componentDidMount() {
-    let charactersIterator = 1;
-    let locationsIterator = 1;
-    let episodesIterator = 1;
-    let characters = [];
-    let locations = [];
-    let episodes = [];
+    const { dispatch } = this.props;
 
-    const fetchData = (
-      data,
-      pageIterator,
-      fetchingData,
-      loadingKey,
-      dataKey
-    ) => {
-      axios
-        .get(`https://rickandmortyapi.com/api/${data}/?page=${pageIterator}`)
-        .then(({ data: { info: { pages } }, data: { results } }) => {
-          fetchingData = fetchingData.concat(results);
-          pageIterator++;
-          if (pageIterator > pages) {
-            this.setState({ [loadingKey]: false, [dataKey]: fetchingData });
-            return "stop fetching data";
-          }
-          return fetchData(
-            data,
-            pageIterator,
-            fetchingData,
-            loadingKey,
-            dataKey
-          );
-        })
-        .catch(error => {
-          this.setState({
-            loadingCharacters: false,
-            loadingLocations: false,
-            loadingEpisodes: false,
-            error
-          });
-        });
-    };
-
-    fetchData(
-      "character",
-      charactersIterator,
-      characters,
-      "loadingCharacters",
-      "characters"
-    );
-    fetchData(
-      "location",
-      locationsIterator,
-      locations,
-      "loadingLocations",
-      "locations"
-    );
-    fetchData(
-      "episode",
-      episodesIterator,
-      episodes,
-      "loadingEpisodes",
-      "episodes"
-    );
+    fetchData("character", dispatch);
+    fetchData("location", dispatch);
+    fetchData("episode", dispatch);
   }
 
   render() {
     const {
-      characters,
+      charactersData,
       loadingCharacters,
       loadingLocations,
       loadingEpisodes,
       error
-    } = this.state;
+    } = this.props;
 
     return (
       <CharactersCardsWithHandleErrorAndLoading
-        characters={characters}
+        characters={charactersData}
         loadingCharacters={loadingCharacters}
         loadingLocations={loadingLocations}
         loadingEpisodes={loadingEpisodes}
@@ -107,4 +42,30 @@ class RickAndMortyCharactersCards extends React.Component {
   }
 }
 
-export default RickAndMortyCharactersCards;
+const mapStateToProps = state => {
+  const {
+    characters: { charactersData, loadingCharacters, errorCharacters },
+    locations: { loadingLocations, errorLocations },
+    episodes: { loadingEpisodes, errorEpisodes }
+  } = state;
+
+  const error = errorCharacters || errorLocations || errorEpisodes;
+
+  return {
+    charactersData,
+    loadingCharacters,
+    loadingLocations,
+    loadingEpisodes,
+    error
+  };
+};
+
+RickAndMortyCharactersCards.propTypes = {
+  charactersData: PropTypes.array,
+  loadingCharacters: PropTypes.bool,
+  loadingLocations: PropTypes.bool,
+  loadingEpisodes: PropTypes.bool,
+  error: PropTypes.bool
+};
+
+export default connect(mapStateToProps)(RickAndMortyCharactersCards);

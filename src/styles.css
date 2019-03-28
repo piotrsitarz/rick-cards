@@ -53,8 +53,7 @@ body {
   letter-spacing: 1px;
   padding-top: 10px;
 }
-
-.async-status-wrapper {
+.error__wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
