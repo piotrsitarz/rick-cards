@@ -65,7 +65,7 @@ RickAndMortyCharactersCards.propTypes = {
   loadingCharacters: PropTypes.bool,
   loadingLocations: PropTypes.bool,
   loadingEpisodes: PropTypes.bool,
-  error: PropTypes.bool
+  error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
 };
 
 export default connect(mapStateToProps)(RickAndMortyCharactersCards);

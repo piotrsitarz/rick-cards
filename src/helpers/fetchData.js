@@ -4,19 +4,19 @@ import { locationsActions } from "../actions/locations";
 import { episodesActions } from "../actions/episodes";
 
 export const fetchData = (
-  data,
+  endpoint,
   dispatch,
   fetchingData = [],
   pageIterator = 1
 ) => {
   axios
-    .get(`https://rickandmortyapi.com/api/${data}/?page=${pageIterator}`)
+    .get(`https://rickandmortyapi.com/api/${endpoint}/?page=${pageIterator}`)
     .then(({ data: { info: { pages }, results } }) => {
       fetchingData = fetchingData.concat(results);
       pageIterator++;
 
       if (pageIterator > pages) {
-        switch (data) {
+        switch (endpoint) {
           case "character":
             return dispatch(charactersActions.success(fetchingData));
           case "location":
@@ -25,16 +25,18 @@ export const fetchData = (
             return dispatch(episodesActions.success(fetchingData));
         }
       }
-      return fetchData(data, dispatch, fetchingData, pageIterator);
+      return fetchData(endpoint, dispatch, fetchingData, pageIterator);
     })
     .catch(error => {
-      switch (data) {
+      const { message } = error;
+
+      switch (endpoint) {
         case "character":
-          return dispatch(charactersActions.error(error));
+          return dispatch(charactersActions.error(message));
         case "location":
-          return dispatch(locationsActions.error(error));
+          return dispatch(locationsActions.error(message));
         default:
-          return dispatch(episodesActions.error(error));
+          return dispatch(episodesActions.error(message));
       }
     });
 };

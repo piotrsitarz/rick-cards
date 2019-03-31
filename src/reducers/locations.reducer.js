@@ -11,7 +11,7 @@ export const locations = (state = initialState, action) => {
       };
     case "LOCATIONS_FAILURE":
       return {
-        errorLocations: true,
+        errorLocations: action.message,
         loadingLocations: false
       };
     default:

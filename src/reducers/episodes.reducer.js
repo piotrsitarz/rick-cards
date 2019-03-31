@@ -11,7 +11,7 @@ export const episodes = (state = initialState, action) => {
       };
     case "EPISODES_FAILURE":
       return {
-        errorEpisodes: true,
+        errorEpisodes: action.message,
         loadingEpisodes: false
       };
     default:

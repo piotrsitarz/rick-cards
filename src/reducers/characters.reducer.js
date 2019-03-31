@@ -11,7 +11,7 @@ export const characters = (state = initialState, action) => {
       };
     case "CHARACTERS_FAILURE":
       return {
-        errorCharacters: true,
+        errorCharacters: action.message,
         loadingCharacters: false
       };
     default:
