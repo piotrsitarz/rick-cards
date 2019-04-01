@@ -63,3 +63,11 @@ body {
 .error__paragraph {
   color: white;
 }
+
+.header-container {
+  width: 100%;
+}
+
+.header__paragraph {
+  text-align: center;
+}

@@ -2,17 +2,17 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { compose } from "recompose";
-import { fetchData } from "../helpers/fetchData";
-import CharactersCards from "../components/CharactersCards";
-import withHandleError from "../components/shared/hoc/withHandleError";
-import withLoading from "../components/shared/hoc/withLoading";
+import { fetchData } from "../../helpers/fetchData";
+import CharactersCards from "./CharactersCards/CharactersCards";
+import withHandleError from "../../components/hoc/withHandleError";
+import withLoading from "../../components/hoc/withLoading";
 
 const CharactersCardsWithHandleErrorAndLoading = compose(
   withLoading,
   withHandleError
 )(CharactersCards);
 
-class RickAndMortyCharactersCards extends React.Component {
+class CharactersCardsPage extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props;
 
@@ -60,7 +60,7 @@ const mapStateToProps = state => {
   };
 };
 
-RickAndMortyCharactersCards.propTypes = {
+CharactersCardsPage.propTypes = {
   charactersData: PropTypes.array,
   loadingCharacters: PropTypes.bool,
   loadingLocations: PropTypes.bool,
@@ -68,4 +68,4 @@ RickAndMortyCharactersCards.propTypes = {
   error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
 };
 
-export default connect(mapStateToProps)(RickAndMortyCharactersCards);
+export default connect(mapStateToProps)(CharactersCardsPage);
