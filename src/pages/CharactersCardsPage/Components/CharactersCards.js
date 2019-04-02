@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
-import Avatar from "./CharacterCard/Avatar";
-import CharacterCard from "./CharacterCard/CharacterCard";
-import Description from "./CharacterCard/Description";
+import Avatar from "./CharactersCards/Avatar";
+import CharacterCard from "./CharactersCards/CharacterCard";
+import Description from "./CharactersCards/Description";
 
 const CharactersCards = ({ characters }) =>
   characters.map(({ id, name, image, species, gender }) => (
