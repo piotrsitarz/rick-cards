@@ -1,13 +1,13 @@
 import PropTypes from "prop-types";
 import React from "react";
+import CardContainer from "../../../components/Card/CardContainer";
+import CardDescription from "../../../components/Card/CardDescription";
 
 const LocationsCards = ({ locations }) =>
   locations.map(({ id, name, type, dimension }) => (
-    <div key={id}>
-      <p>{name}</p>
-      <p>{type}</p>
-      <p>{dimension}</p>
-    </div>
+    <CardContainer key={id}>
+      <CardDescription name={name} type={type} dimension={dimension} wide />
+    </CardContainer>
   ));
 
 LocationsCards.propTypes = {

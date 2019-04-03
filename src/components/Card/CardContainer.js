@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const CharacterCard = ({ children }) => (
+const CardContainer = ({ children }) => (
   <div className="card-container">{children}</div>
 );
 
-CharacterCard.propTypes = {
+CardContainer.propTypes = {
   children: PropTypes.array
 };
 
-export default CharacterCard;
+export default CardContainer;

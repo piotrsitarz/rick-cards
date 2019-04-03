@@ -40,6 +40,11 @@ body {
   width: 50%;
 }
 
+.descripion-container__wide {
+  width: 100%;
+  text-align: center;
+}
+
 .description__title {
   font-size: 1.8em;
   color: white;
